@@ -1,17 +1,11 @@
 {
-  "updatedAt": "2026-10-30T12:56:55.8462264Z",
+  "updatedAt": "2026-10-30T12:57:36.4207196Z",
   "rows": [
     {
       "date": "2026-10-29",
       "product": "Trail Bottle",
       "region": "North",
       "sales": 1240.5
-    },
-    {
-      "date": "2026-10-29",
-      "product": "Day Pack",
-      "region": "West",
-      "sales": 895
     },
     {
       "date": "2026-10-28",
