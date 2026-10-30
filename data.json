@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-30T12:59:42.6881094Z",
+  "updatedAt": "2026-10-30T13:47:41.0843547Z",
   "rows": [
     {
       "date": "2026-10-29",
@@ -14,21 +14,15 @@
       "sales": 2130.75
     },
     {
-      "date": "2026-10-28",
-      "product": "Trail Bottle",
-      "region": "South",
-      "sales": 640
-    },
-    {
-      "date": "2026-10-27",
-      "product": "Day Pack",
-      "region": "North",
-      "sales": 1575.25
-    },
-    {
       "date": "46325",
       "product": "Apple",
       "region": "Central",
+      "sales": 1575.25
+    },
+    {
+      "date": "2026-10-35",
+      "product": "ginger",
+      "region": "yrnf",
       "sales": 1575.25
     }
   ]
