@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sales snapshot demo</title>
+  <style>
+    :root { color-scheme: light; font: 16px/1.5 system-ui, sans-serif; color: #182230; background: #f4f7fb; }
+    body { margin: 0; }
+    main { max-width: 900px; margin: 48px auto; padding: 0 20px; }
+    header, .card { background: white; border: 1px solid #dce4ee; border-radius: 14px; padding: 24px; }
+    header { margin-bottom: 18px; }
+    h1 { margin: 0 0 4px; font-size: 1.8rem; }
+    .muted { color: #58677a; margin: 0; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+    th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid #e7edf4; }
+    th { color: #526174; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; }
+    td:last-child, th:last-child { text-align: right; }
+    .error { color: #a12c2c; }
+    footer { color: #58677a; font-size: .9rem; padding: 16px 2px; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Sales snapshot</h1>
+      <p class="muted">A small sample refreshed from an online workbook.</p>
+    </header>
+    <section class="card" aria-labelledby="sample-title">
+      <h2 id="sample-title">Recent sales</h2>
+      <p class="muted" id="updated">Loading update time…</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Date</th><th>Product</th><th>Region</th><th>Sales</th></tr></thead>
+          <tbody id="rows"><tr><td colspan="4">Loading sample data…</td></tr></tbody>
+        </table>
+      </div>
+      <p class="muted" id="count"></p>
+    </section>
+    <footer>Demo data only. No private workbook information is shown here.</footer>
+  </main>
+  <script>
+    const money = new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' });
+    fetch('./data.json', { cache: 'no-store' })
+      .then(response => { if (!response.ok) throw new Error('Could not load data.json'); return response.json(); })
+      .then(data => {
+        const updated = new Date(data.updatedAt);
+        document.querySelector('#updated').textContent = `Last updated: ${Number.isNaN(updated.valueOf()) ? data.updatedAt : updated.toLocaleString()}`;
+        const body = document.querySelector('#rows');
+        body.replaceChildren(...data.rows.map(row => {
+          const tr = document.createElement('tr');
+          [row.date, row.product, row.region, money.format(row.sales)].forEach(value => {
+            const td = document.createElement('td'); td.textContent = value; tr.append(td);
+          });
+          return tr;
+        }));
+        document.querySelector('#count').textContent = `Showing ${data.rows.length} sample rows.`;
+      })
+      .catch(error => {
+        document.querySelector('#updated').textContent = error.message;
+        document.querySelector('#updated').classList.add('error');
+        document.querySelector('#rows').replaceChildren();
+      });
+  </script>
+</body>
+</html>
